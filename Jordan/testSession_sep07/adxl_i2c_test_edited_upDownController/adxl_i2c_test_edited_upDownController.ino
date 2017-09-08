@@ -138,15 +138,29 @@ void setup(void)
   Serial.println("");
 }
 
+
+/* 
+*  Helper Function To Write Int  
+*  
+*  uePrintInt(int) 
+*/
+      void uePrintInt(int lVal) { 
+        byte lBuffer[] = {
+          byte(lVal & 0xff),
+          byte(lVal >> 8 & 0xff),
+          byte(lVal >> 16 & 0xff),
+          byte(lVal >> 24 & 0xff)
+        };
+        Serial.write(lBuffer, 4);
+      }
+
 void loop(void) 
 {
   /* Get a new sensor event */ 
   sensors_event_t event; 
   accel.getEvent(&event);
  
-  /* Display the results (acceleration is measured in m/s^2) */
-  Serial.print("X: "); Serial.print(event.acceleration.x); Serial.print("  ");
-  Serial.print("Y: "); Serial.print(event.acceleration.y); Serial.print("  ");
-  Serial.print("Z: "); Serial.print(event.acceleration.z); Serial.print("  ");Serial.println("m/s^2 ");
-  delay(500);
+  /* Display the results getZ results as an integer */
+  uePrintInt((int) event.acceleration.z); 
+  delay(100);
 }

@@ -5,6 +5,15 @@
 /* Assign a unique ID to this sensor at the same time */
 Adafruit_ADXL345_Unified accel = Adafruit_ADXL345_Unified(12345);
 
+
+//establish Contact with Processing application
+void establishContact() {
+  while (Serial.available() <= 0) {
+    Serial.println("A");   // send a capital A
+    delay(300);
+  }
+}
+
 void displaySensorDetails(void)
 {
   sensor_t sensor;
@@ -113,8 +122,11 @@ void setup(void)
   while (!Serial); // for Leonardo/Micro/Zero
 #endif
   Serial.begin(9600);
+
+  establishContact();  // send a byte to establish contact until receiver responds
+
   Serial.println("Accelerometer Test"); Serial.println("");
-  
+
   /* Initialise the sensor */
   if(!accel.begin())
   {
@@ -145,8 +157,11 @@ void loop(void)
   accel.getEvent(&event);
  
   /* Display the results (acceleration is measured in m/s^2) */
-  Serial.print("X: "); Serial.print(event.acceleration.x); Serial.print("  ");
-  Serial.print("Y: "); Serial.print(event.acceleration.y); Serial.print("  ");
-  Serial.print("Z: "); Serial.print(event.acceleration.z); Serial.print("  ");Serial.println("m/s^2 ");
-  delay(10);
+//  Serial.print("X: "); Serial.print(event.acceleration.x); Serial.print("  ");
+//  Serial.print("Y: "); Serial.print(event.acceleration.y); Serial.print("  ");
+//  Serial.print("Z: "); Serial.print(event.acceleration.z); Serial.print("  ");Serial.println("m/s^2 ");
+    Serial.print(event.acceleration.x); Serial.print(",");
+    Serial.print(event.acceleration.y); Serial.print(",");
+    Serial.print(event.acceleration.z); Serial.println("");
+  delay(0);
 }

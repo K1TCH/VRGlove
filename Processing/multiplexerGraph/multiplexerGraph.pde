@@ -16,7 +16,7 @@ boolean newData = false;
 
 void setup(  ) {
   // initalize port
-  String portName = "COM4"; //change the 0 to a 1 or 2 etc. to match your port
+  String portName = "COM3"; //change the 0 to a 1 or 2 etc. to match your port
   myPort = new Serial(this, portName, 9600);
   myPort.bufferUntil('\n');
   noLoop();
